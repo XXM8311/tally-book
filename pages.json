@@ -1,0 +1,93 @@
+{
+	"pages": [
+		{
+			"path" : "pages/login/login",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+					"navigationStyle": "custom"
+			}
+		},
+
+
+		{
+			"path" : "pages/mine/mine",
+			"style" : 
+			{
+					"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/record/record",
+			"style" : 
+			{
+					"navigationStyle": "custom"
+			}
+		},
+
+		{
+			"path" : "pages/reg/reg",
+			"style" : 
+			{
+			"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/checkDetail/checkDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/report/report",
+			"style" : 
+			{
+					"navigationStyle": "custom"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"easycom": {
+		"custom": {
+			"^u--(.*)": "uview-plus/components/u-$1/u-$1.vue",
+			"^up-(.*)": "uview-plus/components/u-$1/u-$1.vue",
+	        "^u-([^-].*)": "uview-plus/components/u-$1/u-$1.vue"
+		}
+	},
+		"tabBar": {
+			"color": "#000000",
+			"selectedColor": "#007AFF",
+			"list": [
+				{
+					"iconPath": "static/tab/home.png",
+					"selectedIconPath": "static/tab/homeSelect.png",
+					"text": "首页",
+					"pagePath": "pages/index/index"
+				},
+				{
+					"iconPath": "static/tab/chargeUp.png",
+					"selectedIconPath": "static/tab/chargeUpSelect.png",
+					"text": "记账",
+					"pagePath": "pages/record/record"
+				},
+				{
+					"iconPath": "static/tab/mine.png",
+					"selectedIconPath": "static/tab/mineSelect.png",
+					"text": "我的",
+					"pagePath": "pages/mine/mine"
+				}
+			]
+		},
+	"uniIdRouter": {}
+}
