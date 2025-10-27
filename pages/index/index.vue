@@ -1,348 +1,354 @@
 <template>
-	<view class="container">
-		<!-- 总览区域 -->
-		<view class="overview">
-			<view class="title-box">
-				<view class="title-year">
-					<text class="title">全部流水</text>
-					<!-- 弹层选择器 -->
-					<picker
-						mode="date"
-						fields="year"
-						:value="currentYear"
-						@change="confirmYear"
-					>
-					<!-- mode类型 fields选择字段 start开始 end介绍日期 -->
-						<view class="year-text">
-							<text>{{ currentYear }}年</text>
-							<uni-icons type="bottom" size="14" color="#666"></uni-icons>
-						</view>
-					</picker>
-				</view>
-			</view>
-			<view class="amount-box">
-				<view class="amount-item">
-					<text class="value">{{ summary.balance }}</text>
-					<text class="label">结余</text>
-				</view>
-				<view class="amount-item">
-					<text class="value">{{ summary.totalIncome }}</text>
-					<text class="label">收入</text>
-				</view>
-				<view class="amount-item">
-					<text class="value">{{ summary.totalExpense }}</text>
-					<text class="label">支出</text>
-				</view>
-			</view>
-		</view>
+  <view class="container">
+    <view class="overview">
+      <view class="title-box">
+        <view class="title-year">
+          <text class="title">全部流水</text>
+          <picker
+            mode="date"
+            fields="year"
+            :value="currentYear"
+            @change="confirmYear"
+          >
+            <view class="year-text">
+              <text>{{ currentYear }}年</text>
+              <uni-icons type="bottom" size="14" color="#666"></uni-icons>
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="amount-box">
+        <view class="amount-item">
+          <text class="value">{{ summary.balance }}</text>
+          <text class="label">结余</text>
+        </view>
+        <view class="amount-item">
+          <text class="value">{{ summary.totalIncome }}</text>
+          <text class="label">收入</text>
+        </view>
+        <view class="amount-item">
+          <text class="value">{{ summary.totalExpense }}</text>
+          <text class="label">支出</text>
+        </view>
+      </view>
+    </view>
 
-		<!-- 时间筛选 -->
-		<view class="filter-section">
-			<view class="filter-tabs">
-				<text 
-					v-for="(item, index) in tabList" 
-					:key="index"
-					:class="['tab-item', currentTabName === item.value ? 'active' : '']"
-					@click="handleChangeTab(item.value)"
-				>
-					{{ item.label }}
-				</text>
-			</view>
-			<view class="stats-btn" @click="navigateToStats">
-				<uni-icons type="pie" size="16" color="#3494E6"></uni-icons>
-				<text>统计</text>
-			</view>
-		</view>
+    <view class="filter-section">
+      <view class="filter-tabs">
+        <text
+          v-for="(item, index) in tabList"
+          :key="index"
+          :class="['tab-item', currentTabName === item.value ? 'active' : '']"
+          @click="handleChangeTab(item.value)"
+        >
+          {{ item.label }}
+        </text>
+      </view>
+      <view class="stats-btn" @click="navigateToStats">
+        <uni-icons type="pie" size="16" color="#3494E6"></uni-icons>
+        <text>统计</text>
+      </view>
+    </view>
 
-		<!-- 账单列表 -->
-		<view class="bill-list">
-			<view class="bill-group" v-for="(group, index) in billList" :key="group.id">
-				<view class="group-header" @click="toggleGroup(index)">
-					<view class="header-left">
-						<uni-icons :type="collapsedGroups[index] ? 'right' : 'bottom'" size="14" color="#666"></uni-icons>
-						<text class="period">{{ group.period }}</text>
-					</view>
-					<view class="group-summary">
-						<text>收入: {{ group.income }}</text>
-						<text style="margin-left: 20rpx;">|</text>
-						<text style="margin-left: 20rpx;">支出: {{ group.expense }}</text>
-					</view>
-				</view>
-				
-				<view class="bill-items" v-show="!collapsedGroups[index]">
-					<view class="bill-item" 
-						v-for="(record, rIndex) in group.records" 
-						:key="rIndex"
-						@click="navigateToDetail(record)"
-					>
-						<view class="left">
-							<view class="category">{{ record.category }}</view>
-							<view class="remark">{{ record.remark }}</view>
-						</view>
-						<view class="right">
-							<text :class="['amount', record.type === '支出' ? 'expense' : 'income']">
-								{{ record.type === '支出' ? '-' : '+' }}{{ record.amount }}
-							</text>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
-	</view>
+    <view class="bill-list">
+      <view
+        class="bill-group"
+        v-for="(group, index) in billList"
+        :key="group.id"
+      >
+        <view class="group-header" @click="toggleGroup(index)">
+          <view class="header-left">
+            <uni-icons
+              :type="collapsedGroups[index] ? 'right' : 'bottom'"
+              size="14"
+              color="#666"
+            ></uni-icons>
+            <text class="period">{{ group.period }}</text>
+          </view>
+          <view class="group-summary">
+            <text>收入: {{ group.income }}</text>
+            <text style="margin-left: 20rpx">|</text>
+            <text style="margin-left: 20rpx">支出: {{ group.expense }}</text>
+          </view>
+        </view>
+
+        <view class="bill-items" v-show="!collapsedGroups[index]">
+          <view
+            class="bill-item"
+            v-for="(record, rIndex) in group.records"
+            :key="rIndex"
+            @click="navigateToDetail(record)"
+          >
+            <view class="left">
+              <view class="category">{{ record.category }}</view>
+              <view class="remark">{{ record.remark }}</view>
+            </view>
+            <view class="right">
+              <text
+                :class="[
+                  'amount',
+                  record.type === '支出' ? 'expense' : 'income',
+                ]"
+              >
+                {{ record.type === "支出" ? "-" : "+" }}{{ record.amount }}
+              </text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script setup>
-import {getRecordStats} from '@/api/record'
-import { ref } from 'vue'
-import { onShow } from '@dcloudio/uni-app'
+import { getRecordStats } from "@/api/record";
+import { ref } from "vue";
+import { onShow } from "@dcloudio/uni-app";
 
-const currentYear = ref(new Date().getFullYear())//2025
-const currentTabName = ref('month')
+const currentYear = ref(new Date().getFullYear());
+const currentTabName = ref("month");
 
 const tabList = [
-	{ label: '按年', value: 'year' },
-	{ label: '按月', value: 'month' },
-	{ label: '按周', value: 'week' }
-]
+  { label: "按年", value: "year" },
+  { label: "按月", value: "month" },
+  { label: "按周", value: "week" },
+];
 
 const summary = ref({
-	balance: 0,
-	totalIncome: 0,
-	totalExpense: 0
-})
+  balance: 0,
+  totalIncome: 0,
+  totalExpense: 0,
+});
 
-const billList = ref([])
-const collapsedGroups = ref({})
+const billList = ref([]);
+const collapsedGroups = ref({});
 
-// 年份选择确认
-const confirmYear = async(e) => {
-	const year = new Date(e.detail.value).getFullYear()//获取一个年份
-	currentYear.value = year
-	await fetchData(year)
-}
+const confirmYear = async (e) => {
+  const year = new Date(e.detail.value).getFullYear();
+  currentYear.value = year;
+  await fetchData(year);
+};
 
-const fetchData = async (year, groupBy = 'month') => {
-	const res = await getRecordStats({
-		startDate: `${year}-01-01`,
-		endDate: `${year}-12-31`,
-		groupBy: groupBy//选择类型
-	})
-	
-	if (res.code === 200) {
-		summary.value = res.data.summary
-		billList.value = res.data.list.map(item => ({
-			period: item.period,
-			income: item.income,
-			expense: item.expense,
-			records: item.records || []
-		}))
-		collapsedGroups.value = {}
-	}
-}
+const fetchData = async (year, groupBy = "month") => {
+  const res = await getRecordStats({
+    startDate: `${year}-01-01`,
+    endDate: `${year}-12-31`,
+    groupBy: groupBy,
+  });
+
+  if (res.code === 200) {
+    summary.value = res.data.summary;
+    billList.value = res.data.list.map((item) => ({
+      period: item.period,
+      income: item.income,
+      expense: item.expense,
+      records: item.records || [],
+    }));
+    collapsedGroups.value = {};
+  }
+};
 
 const handleChangeTab = (tabName) => {
-	currentTabName.value = tabName
-	fetchData(currentYear.value, tabName)
-}
+  currentTabName.value = tabName;
+  fetchData(currentYear.value, tabName);
+};
 
 const toggleGroup = (index) => {
-	collapsedGroups.value[index] = !collapsedGroups.value[index]
-}
+  collapsedGroups.value[index] = !collapsedGroups.value[index];
+};
 
-// 跳转到详情页
 const navigateToDetail = (record) => {
-	uni.navigateTo({
-		url: `/pages/checkDetail/checkDetail?id=${record.id}`
-	})
-}
+  uni.navigateTo({
+    url: `/pages/checkDetail/checkDetail?id=${record.id}`,
+  });
+};
 
-// 跳转到统计页面
 const navigateToStats = () => {
-	uni.navigateTo({
-		url: '/pages/report/report?year='+currentYear.value
-	})
-}
+  uni.navigateTo({
+    url: "/pages/report/report?year=" + currentYear.value,
+  });
+};
 
 onShow(async () => {
-	await fetchData(currentYear.value, currentTabName.value)
-})
+  await fetchData(currentYear.value, currentTabName.value);
+});
 </script>
 
 <style scoped>
-.container { 
-	background: #f7f8fa; 
-	max-height: 100vh;
-	overflow: scroll;
+.container {
+  background: #f7f8fa;
+  max-height: 100vh;
+  overflow: scroll;
 }
 
 .overview {
-	background: linear-gradient(135deg, #3494E6, #EC6EAD);
-	padding: 40rpx 30rpx;
-	margin: 20rpx;
-	border-radius: 24rpx;
+  background: linear-gradient(135deg, #3494e6, #ec6ead);
+  padding: 40rpx 30rpx;
+  margin: 20rpx;
+  border-radius: 24rpx;
 }
 
 .title-box {
-	margin-bottom: 30rpx;
+  margin-bottom: 30rpx;
 }
 
 .title-year {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .title {
-	font-size: 32rpx;
-	font-weight: bold;
-	color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #fff;
 }
 
 .year-text {
-	display: flex;
-	margin-left: 20rpx;
-	padding: 8rpx 20rpx;
-	background: rgba(255, 255, 255, 0.2);
-	border-radius: 30rpx;
-	color: #fff;
+  display: flex;
+  margin-left: 20rpx;
+  padding: 8rpx 20rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30rpx;
+  color: #fff;
 }
 
 .amount-box {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .amount-item {
-	text-align: center;
+  text-align: center;
 }
 
-.value { 
-	font-size: 40rpx; 
-	font-weight: bold; 
-	color: #fff;
+.value {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #fff;
 }
 
-.label { 
-	font-size: 24rpx; 
-	color: rgba(255, 255, 255, 0.8); 
+.label {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .filter-section {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background: #fff;
-	padding: 20rpx;
-	margin: 0 20rpx;
-	border-radius: 16rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 20rpx;
+  margin: 0 20rpx;
+  border-radius: 16rpx;
 }
 
 .filter-tabs {
-	flex: 1;
-	display: flex;
+  flex: 1;
+  display: flex;
 }
 
 .stats-btn {
-	display: flex;
-	align-items: center;
-	gap: 6rpx;
-	padding: 10rpx 20rpx;
-	border-radius: 30rpx;
-	background: rgba(52, 148, 230, 0.1);
-	color: #3494E6;
-	font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 10rpx 20rpx;
+  border-radius: 30rpx;
+  background: rgba(52, 148, 230, 0.1);
+  color: #3494e6;
+  font-size: 24rpx;
 }
 
 .tab-item {
-	margin-right: 40rpx;
-	color: #666;
-	position: relative;
+  margin-right: 40rpx;
+  color: #666;
+  position: relative;
 }
 
 .tab-item.active {
-	color: #3494E6;
-	font-weight: bold;
+  color: #3494e6;
+  font-weight: bold;
 }
 
 .tab-item.active::after {
-	content: '';
-	position: absolute;
-	bottom: -4rpx;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 40rpx;
-	height: 4rpx;
-	background: #3494E6;
+  content: "";
+  position: absolute;
+  bottom: -4rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background: #3494e6;
 }
 
-.bill-list { 
-	max-height: 70vh;
-	padding: 0 20rpx;
-	overflow-y: auto;
+.bill-list {
+  max-height: 70vh;
+  padding: 0 20rpx;
+  overflow-y: auto;
 }
 
 .bill-group {
-	background: #fff;
-	margin-bottom: 20rpx;
-	border-radius: 16rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+  border-radius: 16rpx;
 }
 
 .group-header {
-	display: flex;
-	justify-content: space-between;
-	padding: 24rpx;
-	border-bottom: 1rpx solid #eee;
-	background: #fafafa;
-	cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #eee;
+  background: #fafafa;
+  cursor: pointer;
 }
 
 .header-left {
-	display: flex;
-	align-items: center;
-	gap: 10rpx;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
 }
 
 .period {
-	font-weight: bold;
-	margin-left: 10rpx;
+  font-weight: bold;
+  margin-left: 10rpx;
 }
 
 .group-summary {
-	color: #666;
-	font-size: 26rpx;
+  color: #666;
+  font-size: 26rpx;
 }
 
 .bill-item {
-	display: flex;
-	justify-content: space-between;
-	padding: 24rpx;
-	border-bottom: 1rpx solid #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #f5f5f5;
 }
 
 .bill-item:last-child {
-	border-bottom: none;
+  border-bottom: none;
 }
 
 .record-header {
-	display: flex;
-	align-items: center;
-	gap: 10rpx;
-	margin-bottom: 6rpx;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  margin-bottom: 6rpx;
 }
 
-.category { 
-	margin-bottom: 6rpx;
+.category {
+  margin-bottom: 6rpx;
 }
 
-.remark { 
-	font-size: 24rpx; 
-	color: #999; 
+.remark {
+  font-size: 24rpx;
+  color: #999;
 }
 
-.expense { 
-	color: #ff5555; 
+.expense {
+  color: #ff5555;
 }
 
-.income { 
-	color: #07c160; 
+.income {
+  color: #07c160;
 }
 </style>
