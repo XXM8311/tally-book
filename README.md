@@ -34,7 +34,7 @@ TallyBook 是一款现代化的个人记账应用，专为帮助用户高效管�
 - 🎨 Composition API：组合式API
 - 🎯 uview-plus：UI组件库
 - 💅 SCSS：样式预处理
-## 后技术端架构
+## 后端技术端架构
 - 🚀 express
 - ⚡ jwt
 - 🎨 knex orm
