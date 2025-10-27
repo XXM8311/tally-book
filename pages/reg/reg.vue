@@ -1,37 +1,30 @@
 <template>
 	<view class="reg-container">
-		<!-- 顶部标题 -->
 		<view class="header">
 			<text class="title">用户注册</text>
 		</view>
 		
-		<!-- 表单区域 -->
 		<view class="form-box">
-			<!-- 手机号输入框 -->
 			<view class="input-item">
 				<uni-icons type="phone-filled" size="20"></uni-icons>
 				<input type="number" v-model="phone" placeholder="请输入手机号" maxlength="11" />
 			</view>
 			
-			<!-- 用户名输入框 -->
 			<view class="input-item">
 				<uni-icons type="person-filled" size="20"></uni-icons>
 				<input type="text" v-model="userName" placeholder="请输入用户名" />
 			</view>
 			
-			<!-- 密码输入框 -->
 			<view class="input-item">
 				<uni-icons type="locked-filled" size="20"></uni-icons>
 				<input type="password" v-model="password" placeholder="请输入密码" />
 			</view>
 			
-			<!-- 确认密码输入框 -->
 			<view class="input-item">
 				<uni-icons type="locked-filled" size="20"></uni-icons>
 				<input type="password" v-model="confirmPassword" placeholder="请确认密码" />
 			</view>
 			
-			<!-- 性别选择 -->
 			<view class="sex-select">
 				<text class="label">性别：</text>
 				<radio-group @change="handleSexChange">
@@ -46,10 +39,8 @@
 				</radio-group>
 			</view>
 			
-			<!-- 注册按钮 -->
 			<button class="reg-btn" @click="handleRegister">注册</button>
 			
-			<!-- 返回登录 -->
 			<view class="back-login">
 				<text @click="goToLogin">已有账号？返回登录</text>
 			</view>
@@ -64,16 +55,13 @@ const phone = ref('')
 const userName = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-const sex = ref('1') // 默认男性
+const sex = ref('1')
 
-// 性别选择改变
 const handleSexChange = (e) => {
 	sex.value = e.detail.value
 }
 
-// 注册方法
 const handleRegister = async () => {
-	// 表单验证
 	if (!phone.value || phone.value.length !== 11) {
 		uni.showToast({
 			title: '请输入正确的手机号',
@@ -114,8 +102,6 @@ const handleRegister = async () => {
 		uni.showToast({
 			title: '注册成功',
 			icon: 'none'
-		})//提示注册成功
-		setTimeout(() => {//隔一秒跳转登录页
 			uni.navigateTo({
 				url: '/pages/login/login'
 			})
@@ -128,9 +114,8 @@ const handleRegister = async () => {
 	}
 }
 
-// 返回登录页
 const goToLogin = () => {
-	uni.navigateBack()//返回
+	uni.navigateBack()
 }
 </script>
 

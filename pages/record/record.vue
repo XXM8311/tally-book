@@ -1,6 +1,5 @@
 <template>
   <view class="container">
-    <!-- 金额输入 -->
     <view class="amount-box">
       <text class="label">金额</text>
       <view class="input-row">
@@ -9,7 +8,6 @@
       </view>
     </view>
 
-    <!-- 日期选择 -->
     <view class="date-box">
       <view class="picker-view">
         <text class="label">日期</text>
@@ -26,7 +24,6 @@
       </view>
     </view>
 
-    <!-- 类型选择 -->
     <view class="type-box">
       <text 
         class="type-btn" 
@@ -40,7 +37,6 @@
       >收入</text>
     </view>
 
-    <!-- 分类选择 -->
     <view class="cate-box">
       <view 
         class="cate-item" 
@@ -58,12 +54,10 @@
       </view>
     </view>
 
-    <!-- 备注输入 -->
     <view class="remark-box">
       <input type="text" v-model="remark" placeholder="添加备注" />
     </view>
 
-    <!-- 保存按钮 -->
     <button class="save-btn" @click="save">保存</button>
   </view>
 </template>
@@ -104,11 +98,11 @@ const save = async () => {
     return
   }
   const res = await addRecord({
-    amount: amount.value,//数量
-    type: type.value,//类型
-    category: category.value,//分类
-    remark: remark.value,//备注
-    date: date.value//日期
+    amount: amount.value,
+    type: type.value,
+    category: category.value,
+    remark: remark.value,
+    date: date.value
   })
   if(res.code===200){
     uni.showToast({

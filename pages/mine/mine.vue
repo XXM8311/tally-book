@@ -1,6 +1,5 @@
 <template>
   <view class="container">
-    <!-- 用户信息卡片 -->
     <view class="user-card">
       <view class="user-info">
         <text class="username">{{ userInfo.userName }}</text>
@@ -9,7 +8,6 @@
       </view>
     </view>
 
-    <!-- 菜单列表 -->
     <view class="menu-list">
       <view class="menu-item" @click="showAccountPopup = true">
         <text class="menu-text">账户管理</text>
@@ -19,7 +17,6 @@
       </view>
     </view>
 
-    <!-- 账户管理弹层 -->
     <u-popup :show="showAccountPopup" mode="bottom" @close="showAccountPopup = false" round="16">
       <view class="edit-popup">
         <view class="popup-header">
@@ -45,7 +42,6 @@
       </view>
     </u-popup>
 
-    <!-- 修改密码弹层 -->
     <u-popup :show="showPasswordPopup" mode="bottom" @close="showPasswordPopup = false" round="16">
       <view class="edit-popup">
         <view class="popup-header">
@@ -91,7 +87,6 @@
       </view>
     </u-popup>
 
-    <!-- 关于我们弹层 -->
     <u-popup :show="showAboutPopup" mode="bottom" @close="showAboutPopup = false" round="16">
       <view class="edit-popup">
         <view class="popup-header">
@@ -125,12 +120,10 @@ const userInfo = ref({
   sex: ''
 })
 
-// 弹层显示状态
-const showAccountPopup = ref(false)//账户管理弹层
-const showPasswordPopup = ref(false)//修改密码弹层
-const showAboutPopup = ref(false)//关于我们弹层
+const showAccountPopup = ref(false)
+const showPasswordPopup = ref(false)
+const showAboutPopup = ref(false)
 
-// 修改密码表单
 const passwordForm = ref({
   oldPassword: '',
   newPassword: '',
@@ -138,7 +131,6 @@ const passwordForm = ref({
 })
 
 
-// 获取用户信息
 const fetchUserInfo = async () => {
   try {
     const res = await getUserInfo()
@@ -153,13 +145,11 @@ const fetchUserInfo = async () => {
   }
 }
 
-// 显示修改密码弹层
 const showChangePassword = () => {
-  showAccountPopup.value = false//账户管理弹层设置成false
-  showPasswordPopup.value = true//修改弹层设置成true
+  showAccountPopup.value = false
+  showPasswordPopup.value = true
 }
 
-// 提交修改密码
 const submitPassword = async () => {
   if (!passwordForm.value.oldPassword) {
     uni.showToast({
@@ -205,15 +195,14 @@ const submitPassword = async () => {
     }
 }
 
-// 退出登录
 const handleLogout = () => {
-  showAccountPopup.value = false//账户管理弹层隐藏
+  showAccountPopup.value = false
   uni.showModal({
     title: '提示',
     content: '确定要退出登录吗？',
-    success: async (res) => {//确定的回调函数
+    success: async (res) => {
       if (res.confirm) {
-        uni.clearStorageSync()//清除本地缓存
+        uni.clearStorageSync()
         uni.showToast({
           title: '退出成功',
           icon: 'none'

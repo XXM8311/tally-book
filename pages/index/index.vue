@@ -1,18 +1,15 @@
 <template>
 	<view class="container">
-		<!-- 总览区域 -->
 		<view class="overview">
 			<view class="title-box">
 				<view class="title-year">
 					<text class="title">全部流水</text>
-					<!-- 弹层选择器 -->
 					<picker
 						mode="date"
 						fields="year"
 						:value="currentYear"
 						@change="confirmYear"
 					>
-					<!-- mode类型 fields选择字段 start开始 end介绍日期 -->
 						<view class="year-text">
 							<text>{{ currentYear }}年</text>
 							<uni-icons type="bottom" size="14" color="#666"></uni-icons>
@@ -36,7 +33,6 @@
 			</view>
 		</view>
 
-		<!-- 时间筛选 -->
 		<view class="filter-section">
 			<view class="filter-tabs">
 				<text 
@@ -54,7 +50,6 @@
 			</view>
 		</view>
 
-		<!-- 账单列表 -->
 		<view class="bill-list">
 			<view class="bill-group" v-for="(group, index) in billList" :key="group.id">
 				<view class="group-header" @click="toggleGroup(index)">
@@ -96,7 +91,7 @@ import {getRecordStats} from '@/api/record'
 import { ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 
-const currentYear = ref(new Date().getFullYear())//2025
+const currentYear = ref(new Date().getFullYear())
 const currentTabName = ref('month')
 
 const tabList = [
@@ -114,9 +109,8 @@ const summary = ref({
 const billList = ref([])
 const collapsedGroups = ref({})
 
-// 年份选择确认
 const confirmYear = async(e) => {
-	const year = new Date(e.detail.value).getFullYear()//获取一个年份
+	const year = new Date(e.detail.value).getFullYear()
 	currentYear.value = year
 	await fetchData(year)
 }
@@ -125,7 +119,7 @@ const fetchData = async (year, groupBy = 'month') => {
 	const res = await getRecordStats({
 		startDate: `${year}-01-01`,
 		endDate: `${year}-12-31`,
-		groupBy: groupBy//选择类型
+		groupBy: groupBy
 	})
 	
 	if (res.code === 200) {
@@ -149,14 +143,12 @@ const toggleGroup = (index) => {
 	collapsedGroups.value[index] = !collapsedGroups.value[index]
 }
 
-// 跳转到详情页
 const navigateToDetail = (record) => {
 	uni.navigateTo({
 		url: `/pages/checkDetail/checkDetail?id=${record.id}`
 	})
 }
 
-// 跳转到统计页面
 const navigateToStats = () => {
 	uni.navigateTo({
 		url: '/pages/report/report?year='+currentYear.value

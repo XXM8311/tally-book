@@ -1,6 +1,5 @@
 <template>
 	<view class="container">
-		<!-- 顶部导航 -->
 		<view class="nav-header">
 			<view class="left">
 				<uni-icons type="left" size="20" @click="goBack"></uni-icons>
@@ -22,7 +21,6 @@
 			</view>
 		</view>
 
-		<!-- 统计卡片 -->
 		<view class="stats-card">
 			<view class="card-title">账本流水统计</view>
 			<view class="balance">
@@ -36,14 +34,12 @@
 			</view>
 		</view>
 
-		<!-- 记账里程碑 -->
 		<view class="milestone">
 			<uni-icons type="flag" size="20" color="#3494E6"></uni-icons>
 			<text class="milestone-text">记账里程碑</text>
 			<text class="record-count">记账笔数 {{ getTotalCount() }}</text>
 		</view>
 
-		<!-- 收入来源 -->
 		<view class="section">
 			<view class="section-header">
 				<text class="section-title">收入来源</text>
@@ -66,7 +62,6 @@
 			</view>
 		</view>
 
-		<!-- 支出分布 -->
 		<view class="section">
 			<view class="section-header">
 				<text class="section-title">支出分布</text>
@@ -99,12 +94,10 @@ import { onLoad } from '@dcloudio/uni-app'
 const currentYear = ref()
 const reportData = ref({})
 
-// 返回上一页
 const goBack = () => {
 	uni.navigateBack()
 }
 
-// 获取报表数据
 const fetchReportData = async (year) => {
 	const res = await getReport({
 		startDate: `${year}-01-01`,
@@ -115,14 +108,12 @@ const fetchReportData = async (year) => {
 	}
 }
 
-// 年份选择
 const onYearChange = async (e) => {
 	const year = new Date(e.detail.value).getFullYear()
 	currentYear.value = year
 	await fetchReportData(year)
 }
 
-// 获取总记账笔数
 const getTotalCount = () => {
 	let total = 0
 	reportData.value.categories?.income?.forEach(item => total += item.count)
