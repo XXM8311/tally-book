@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<!-- 记账详情 -->
 		<view class="detail-card">
 			<view class="amount-section">
 				<text class="type-label">{{ recordDetail.type }}</text>
@@ -48,6 +49,7 @@
 			</view>
 		</view>
 
+		<!-- 底部操作按钮 -->
 		<view class="bottom-buttons">
 			<button class="btn edit-btn" @click="handleEdit">保存</button>
 			<button class="btn delete-btn" @click="handleDelete">删除</button>
@@ -69,15 +71,18 @@ const recordDetail = ref({
 	remark: ''
 })
 
+// 格式化日期
 const formatDate = (dateStr) => {
 	const date = new Date(dateStr)
 	return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
 }
 
+// 日期选择变化
 const onDateChange = (e) => {
 	recordDetail.value.date = new Date(e.detail.value).toISOString()
 }
 
+// 获取记录详情
 const getDetail = async (id) => {
 	try {
 		const res = await getRecordDetail(id)
@@ -92,6 +97,7 @@ const getDetail = async (id) => {
 	}
 }
 
+// 编辑记录
 const handleEdit = async () => {
 	if (!recordDetail.value.amount) {
 		uni.showToast({
@@ -121,6 +127,7 @@ const handleEdit = async () => {
 	}
 }
 
+// 删除记录
 const handleDelete = () => {
 	uni.showModal({
 		title: '提示',

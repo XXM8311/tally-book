@@ -1,0 +1,59 @@
+
+.reg-container.data-v-bca7dd61 {
+	padding: 40rpx;
+}
+.header.data-v-bca7dd61 {
+	text-align: center;
+	margin: 60rpx 0;
+}
+.title.data-v-bca7dd61 {
+	font-size: 40rpx;
+	font-weight: bold;
+}
+.input-item.data-v-bca7dd61 {
+	display: flex;
+	align-items: center;
+	height: 100rpx;
+	background-color: #f8f8f8;
+	border-radius: 50rpx;
+	padding: 0 30rpx;
+	margin-bottom: 30rpx;
+}
+.input-item input.data-v-bca7dd61 {
+	flex: 1;
+	margin-left: 20rpx;
+	font-size: 28rpx;
+}
+.sex-select.data-v-bca7dd61 {
+	display: flex;
+	align-items: center;
+	padding: 20rpx 30rpx;
+	margin-bottom: 30rpx;
+}
+.sex-select .label.data-v-bca7dd61 {
+	font-size: 28rpx;
+	margin-right: 30rpx;
+}
+.radio-item.data-v-bca7dd61 {
+	margin-right: 60rpx;
+	font-size: 28rpx;
+}
+.radio-item radio.data-v-bca7dd61 {
+	transform: scale(0.8);
+	margin-right: 10rpx;
+}
+.reg-btn.data-v-bca7dd61 {
+	background: #007AFF;
+	color: #fff;
+	border-radius: 50rpx;
+	height: 90rpx;
+	line-height: 90rpx;
+	margin: 40rpx 0;
+}
+.back-login.data-v-bca7dd61 {
+	text-align: center;
+	font-size: 28rpx;
+}
+.back-login text.data-v-bca7dd61 {
+	color: #007AFF;
+}
