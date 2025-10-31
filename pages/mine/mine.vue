@@ -201,8 +201,6 @@ const submitPassword = async () => {
 
   const res = await updatePassword(passwordForm.value);
   if (res.code === 200) {
-    console.log(res);
-
     uni.showToast({
       title: "修改成功",
       icon: "success",

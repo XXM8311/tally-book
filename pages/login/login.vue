@@ -55,7 +55,6 @@ const handleLogin = async () => {
     phone: phone.value,
     password: password.value,
   });
-  console.log(res);
   if (res.code == 200) {
     uni.showToast({
       title: "登录成功",
